@@ -5,6 +5,7 @@ export function initHero() {
   const introVideo = document.getElementById("hero-intro");
   const loopVideo = document.getElementById("hero-loop");
   const posterImg = document.getElementById("hero-poster");
+  const stillImg = document.getElementById("hero-still");
   const placeholder = document.querySelector(".hero-placeholder-card");
 
   if (!container) return;
@@ -15,7 +16,10 @@ export function initHero() {
   function showFallback() {
     if (introVideo) introVideo.style.display = "none";
     if (loopVideo) loopVideo.style.display = "none";
-    if (posterImg && posterImg.complete && posterImg.naturalWidth > 0) {
+    if (stillImg) {
+      stillImg.classList.add("active");
+      if (placeholder) placeholder.style.display = "none";
+    } else if (posterImg && posterImg.complete && posterImg.naturalWidth > 0) {
       posterImg.style.display = "block";
       if (placeholder) placeholder.style.display = "none";
     } else if (placeholder) {

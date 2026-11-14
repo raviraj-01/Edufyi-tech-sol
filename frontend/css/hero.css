@@ -109,7 +109,8 @@
 
 .hero-video.active { opacity: 1; }
 
-.hero-video-poster {
+.hero-video-poster,
+.hero-still {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -119,6 +120,16 @@
   object-fit: contain;
   mix-blend-mode: screen;
   display: none;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50%      { transform: translate(-50%, -50%) translateY(-10px); }
+}
+
+.hero-still.active {
+  display: block;
+  animation: heroFloat 6s ease-in-out infinite;
 }
 
 /* Placeholder card shown until video assets are added */
