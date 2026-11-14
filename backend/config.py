@@ -1,14 +1,18 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
+_root = Path(__file__).resolve().parent.parent
+load_dotenv(_root / ".env")
+load_dotenv(_root / "backend" / "atlas-credentials.env")
 load_dotenv()
 
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-in-prod")
     MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/upfound")
     FLASK_ENV = os.getenv("FLASK_ENV", "development")
-    ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@example.com")
-    ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "change-me-before-seeding")
+    ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@upfound.example")
+    ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "AdminUpfound2026!")
 
     # Session cookie settings
     SESSION_COOKIE_HTTPONLY = True

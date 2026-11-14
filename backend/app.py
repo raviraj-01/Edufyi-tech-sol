@@ -12,8 +12,12 @@ def create_app(config_class=Config, test_config=None):
 
     if not app.config.get("TESTING") and app.config.get("MONGODB_URI"):
         try:
-            mongoengine.connect(host=app.config["MONGODB_URI"])
-        except mongoengine.connection.ConnectionFailure:
+            mongo_uri = app.config["MONGODB_URI"]
+            if "mongodb+srv://" in mongo_uri and "/" not in mongo_uri.split("@")[-1]:
+                mongoengine.connect(host=mongo_uri, db="upfound")
+            else:
+                mongoengine.connect(host=mongo_uri)
+        except Exception:
             pass
 
     @app.after_request

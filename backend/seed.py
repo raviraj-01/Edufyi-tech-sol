@@ -91,7 +91,11 @@ def seed_admin():
         print(f"Admin user already exists ({admin_email}).")
 
 def run():
-    mongoengine.connect(host=Config.MONGODB_URI)
+    mongo_uri = Config.MONGODB_URI
+    if "mongodb+srv://" in mongo_uri and "/" not in mongo_uri.split("@")[-1]:
+        mongoengine.connect(host=mongo_uri, db="upfound")
+    else:
+        mongoengine.connect(host=mongo_uri)
     seed_stats()
     seed_plans()
     seed_admin()
