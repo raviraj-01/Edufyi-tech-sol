@@ -172,6 +172,18 @@
 - **Phase 3:** Quality verified. Responsive screenshots captured via Chrome Headless at 360px, 768px, 1280px, and 1440px in `docs/screenshots/`. A11y focus rings, labels, reduced motion. Security checklist verified. Lighthouse offline status documented.
 - **Phase 4:** Finish verified. `.env.example` and `.env` configured. `README.md` updated per template. Distinct commits maintained.
 
+### MongoDB Atlas Setup & Live Seed
+- **Status:** COMPLETED
+- **Credential File:** `backend/atlas-credentials.env` detected.
+- **Security:** Added `*.env` and `backend/*.env` to `.gitignore` to prevent any credential files from being tracked.
+- **Connection Configuration:** Updated `backend/config.py` to automatically load environment variables from root `.env` as well as `backend/atlas-credentials.env`. Configured default database name (`upfound`) on SRV URIs in `backend/app.py` and `backend/seed.py`.
+- **Atlas Verification:** Verified connection to `cluster0.jy1ehm8.mongodb.net/upfound`.
+- **Database Seeding:** Ran `seed.py` against Atlas:
+  - Seeded stats snapshot (83% success rate, 86 launch score, 4.52% growth).
+  - Seeded 3 pricing plans (Starter, Growth, Scale).
+  - Created admin user `admin@upfound.example`.
+- **Automated Tests:** All 22 pytest unit tests continue passing 100%.
+
 ---
 
 ## Test Verification Summary
