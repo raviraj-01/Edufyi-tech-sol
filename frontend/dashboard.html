@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <title>Founder Dashboard | UpFound</title>
+
+  <!-- Google Fonts: Inter & Inter Tight -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@300;500;600&display=swap" rel="stylesheet">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body class="dashboard-page">
+  <header class="nav-header" style="position: absolute;">
+    <a href="/" class="logo" aria-label="UpFound Home">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 22L16 12L26 22" />
+        <path d="M10 26L16 20L22 26" />
+      </svg>
+      <span>UpFound</span>
+    </a>
+
+    <div class="nav-actions">
+      <a href="/" class="btn-nav-auth" style="margin-right: 8px;">← Back to Home</a>
+      <button type="button" class="btn-secondary" id="dash-btn-logout">Log Out</button>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+    <div class="dashboard-header">
+      <div class="dashboard-title-group">
+        <h1>Welcome, <span id="dash-user-name">Founder</span></h1>
+        <p>Track your startup applications, review feedback, and milestone progress.</p>
+      </div>
+      <a href="/?apply=true" class="btn-primary">+ New Application</a>
+    </div>
+
+    <!-- Applications List -->
+    <div class="applications-list" id="applications-container">
+      <p style="color: var(--text-muted);">Loading applications...</p>
+    </div>
+
+    <!-- Admin Section (visible only to admin users) -->
+    <section class="admin-section" id="admin-section" style="display: none;">
+      <div class="admin-header">
+        <span class="meta-chip" style="color: var(--lime); border-color: rgba(184, 240, 90, 0.4);">Admin Controls</span>
+        <h2 style="font-size: 1.5rem; margin-top: 8px;">All Platform Applications</h2>
+      </div>
+      <div class="glass" style="overflow-x: auto; padding: 12px; border-radius: var(--r-md);">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Startup</th>
+              <th>Industry / Stage</th>
+              <th>Ask</th>
+              <th>Status</th>
+              <th>Update Status</th>
+            </tr>
+          </thead>
+          <tbody id="admin-table-body">
+            <tr><td colspan="5">Loading admin queue...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/js/dashboard.js"></script>
+</body>
+</html>
