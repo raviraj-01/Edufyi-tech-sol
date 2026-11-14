@@ -150,18 +150,27 @@
   - `frontend/assets/img/hero-poster.webp`: Placeholder poster image to prevent 404 network warnings.
 - **Verification:** All 22 pytest tests passing. Form validation, modals, modals auto-triggering on deep links (`?apply=true`), responsive layout.
 
-### Hero Video Asset Processing (Steps 1-8)
+### Hero Video Asset Processing (Steps 1-8 & High-Quality Re-encode)
 - **Status:** COMPLETED
-- **Source Clips:** `intro-1.mp4` (intro reveal, 8s, 24fps), `intro-2.mp4` (idle loop, 6s, 24fps).
+- **Source Clips:** `intro-1.mp4` (intro reveal, 8.0s, 24fps), `intro-2.mp4` (idle loop, 6.0s, 24fps). Originals archived in `assets-src/`.
 - **Edge Brightness:** Verified all borders < 20 (top/bottom/left/right range 3.8 - 17.3) ensuring clean `mix-blend-mode: screen`.
-- **Generated Assets & Budget Verification:**
-  - `hero-intro.mp4` (1023.89 KB / ~1.00 MB, budget ≤ 3 MB) - PASS
-  - `hero-intro.webm` (647.61 KB / ~0.63 MB, budget ≤ 3 MB) - PASS
-  - `hero-loop.mp4` (460.79 KB / ~0.45 MB, budget ≤ 2 MB) - PASS
-  - `hero-loop.webm` (408.10 KB / ~0.40 MB, budget ≤ 2 MB) - PASS
-  - `hero-poster.webp` (18.32 KB, budget ≤ 150 KB) - PASS
-  - `hero-end.webp` (23.43 KB) - PASS
+- **Final High-Quality Assets & Budget Verification:**
+  - `hero-intro.mp4` (1.72 MB / CRF 19, budget ≤ 3 MB) - PASS
+  - `hero-intro.webm` (915.10 KB / CRF 28, budget ≤ 3 MB) - PASS
+  - `hero-loop.mp4` (830.15 KB / CRF 21, budget ≤ 2 MB) - PASS
+  - `hero-loop.webm` (597.67 KB / CRF 30, budget ≤ 2 MB) - PASS
+  - `hero-poster.webp` (38.71 KB / Q92, budget ≤ 150 KB) - PASS
+  - `hero-end.webp` (43.39 KB / Q92) - PASS
+- **Stream Verification (ffprobe):** All four videos are 1280x720, 24 fps, no audio stream, durations 8.0s (intro) and 6.0s (loop).
 - **Seam Continuity:** Original `intro-2.mp4` verified with frame-by-frame SSIM stream-loop test (median baseline 0.9897, boundary join dips only by 0.0069 to 0.9828).
+
+### Phase 0-4 Full Run End-to-End
+- **Status:** COMPLETED
+- **Phase 0:** Audit against `TODO.md` complete. Git repo initialized on master branch. `.gitignore` verified. Initial commit `743f21f` and assets commit `451c8bc` logged.
+- **Phase 1:** Backend verified. App factory, MongoEngine models, auth routes, limiter, error handling, security headers, seed script. 22 pytest tests passing with mongomock.
+- **Phase 2:** Frontend verified. Design system tokens, glass styling, responsive nav, real hero videos with seamless loop and floating still fallback (`hero-end.webp`), animated stats counter + SVG ring, plans from API, auth modal, applications, dashboard.
+- **Phase 3:** Quality verified. Responsive screenshots captured via Chrome Headless at 360px, 768px, 1280px, and 1440px in `docs/screenshots/`. A11y focus rings, labels, reduced motion. Security checklist verified. Lighthouse offline status documented.
+- **Phase 4:** Finish verified. `.env.example` and `.env` configured. `README.md` updated per template. Distinct commits maintained.
 
 ---
 
