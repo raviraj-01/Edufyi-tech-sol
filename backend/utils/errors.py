@@ -1,4 +1,5 @@
 from flask import jsonify
+import pymongo.errors
 
 class AppError(Exception):
     def __init__(self, code, message, status_code=400, field=None):
@@ -22,6 +23,14 @@ def register_error_handlers(app):
     @app.errorhandler(AppError)
     def handle_app_error(err):
         return make_error(err.code, err.message, err.status_code, err.field)
+
+    @app.errorhandler(pymongo.errors.PyMongoError)
+    def handle_mongo_error(err):
+        return make_error(
+            "database_unavailable",
+            "Database connection failed. Please ensure your IP is whitelisted in MongoDB Atlas Network Access.",
+            503,
+        )
 
     @app.errorhandler(404)
     def handle_404(err):
