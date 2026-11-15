@@ -139,3 +139,22 @@ def test_admin_application_flow(client):
     assert updated["status"] == "shortlisted"
     assert len(updated["history"]) == 2
     assert updated["history"][1]["status"] == "shortlisted"
+
+def test_write_route_database_unavailable_503(client):
+    from unittest.mock import patch
+    import pymongo.errors
+
+    register_and_login(client, "dbdown@example.com")
+    with patch("backend.models.application.Application.save") as mock_save:
+        mock_save.side_effect = pymongo.errors.ServerSelectionTimeoutError("Database connection lost")
+        res = client.post("/api/applications", json={
+            "startup_name": "Resilient Co",
+            "industry": "saas",
+            "stage": "mvp",
+            "funding_ask": 50000,
+            "pitch": "A pitch that easily meets the length requirements for validation.",
+        })
+        assert res.status_code == 503
+        data = res.get_json()
+        assert data["error"]["code"] == "database_unavailable"
+        assert "Database connection failed" in data["error"]["message"]

@@ -34,3 +34,26 @@ def test_plans(client):
     assert data["plans"][0]["slug"] == "starter"
     assert data["plans"][1]["slug"] == "growth"
     assert data["plans"][2]["slug"] == "scale"
+
+def test_public_routes_db_down_fallback(client):
+    from unittest.mock import patch
+    import pymongo.errors
+
+    with patch("backend.routes.public.StatsSnapshot.objects") as mock_stats:
+        mock_stats.order_by.side_effect = pymongo.errors.ServerSelectionTimeoutError("Atlas down")
+        res = client.get("/api/stats")
+        assert res.status_code == 200
+        data = res.get_json()
+        assert data["launching_startups"]["success_rate"] == 83
+        assert data["launching_startups"]["launch_score"] == 86
+        assert data["launching_startups"]["growth_pct"] == 4.52
+
+    with patch("backend.routes.public.Plan.objects") as mock_plans:
+        mock_plans.order_by.side_effect = pymongo.errors.ServerSelectionTimeoutError("Atlas down")
+        res = client.get("/api/plans")
+        assert res.status_code == 200
+        data = res.get_json()
+        assert len(data["plans"]) == 3
+        assert data["plans"][0]["slug"] == "starter"
+        assert data["plans"][1]["slug"] == "growth"
+        assert data["plans"][2]["slug"] == "scale"
