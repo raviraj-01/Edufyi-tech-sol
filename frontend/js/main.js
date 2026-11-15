@@ -5,6 +5,7 @@ import { initAuth } from "./auth.js";
 import { initForms } from "./forms.js";
 import { initPricing } from "./pricing.js";
 import { initReveal } from "./reveal.js";
+import { initScrollFx } from "./scroll-fx.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initNav();
@@ -14,4 +15,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initForms();
   initPricing();
   initReveal();
+  initScrollFx();
 });

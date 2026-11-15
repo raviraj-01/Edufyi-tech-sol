@@ -28,9 +28,17 @@
   <link rel="stylesheet" href="/css/stats.css">
   <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/sections.css">
+  <link rel="stylesheet" href="/css/scroll-fx.css">
 </head>
 <body>
-  <header class="nav-header" id="site-header">
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress-bar" aria-hidden="true"></div>
+
+  <!-- Ambient scroll orbs -->
+  <div class="scroll-orb scroll-orb-1" aria-hidden="true" data-orb-speed="0.10" data-orb-drift="0.03"></div>
+  <div class="scroll-orb scroll-orb-2" aria-hidden="true" data-orb-speed="0.14" data-orb-drift="0.05"></div>
+  <div class="scroll-orb scroll-orb-3" aria-hidden="true" data-orb-speed="0.08" data-orb-drift="0.04"></div>
+  <header class="nav-header site-header" id="site-header">
     <!-- Brand Logo -->
     <a href="#hero" class="logo" aria-label="UpFound Home">
       <svg class="logo-mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -113,10 +121,10 @@
       <div class="hero-content">
         <div class="hero-text-block">
           <div class="hero-eyebrow">Early Stage Venture Funding</div>
-          <h1 class="hero-headline">Fuel For<br>Startups</h1>
+          <h1 class="hero-headline" data-shimmer>Fuel For<br>Startups</h1>
           <p class="hero-desc">Connecting high-potential early ventures with strategic capital, hands-on mentorship, and an ecosystem built for sustainable scale.</p>
           <div class="hero-actions">
-            <button type="button" class="btn-primary" id="btn-get-started">
+            <button type="button" class="btn-primary" id="btn-get-started" data-magnetic="0.3">
               <span>Get Started</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -202,15 +210,16 @@
     </section>
 
     <!-- About Section -->
+    <div class="section-divider"><div class="section-divider-line"></div></div>
     <section class="section-container reveal-on-scroll" id="about" aria-labelledby="about-title">
       <div class="section-header">
-        <span class="section-eyebrow">About UpFound</span>
-        <h2 class="section-title" id="about-title">Built for Early Stage Builders</h2>
+        <span class="section-eyebrow section-eyebrow-animate">About UpFound</span>
+        <h2 class="section-title" id="about-title" data-shimmer>Built for Early Stage Builders</h2>
         <p class="section-subtitle">We bridge the gap between initial validation and institutional fundraising by providing early capital, structured mentorship, and technical execution advisory.</p>
       </div>
 
-      <div class="about-grid">
-        <div class="about-card glass">
+      <div class="about-grid" data-stagger data-stagger-delay="120">
+        <div class="about-card glass" data-stagger-item data-reveal-from="left">
           <h3>Democratizing Founder Opportunity</h3>
           <p>Traditional incubators demand steep equity early on. UpFound is designed to support founders with flexible capital, operator-led reviews, and transparent evaluations so you can build with confidence.</p>
           <div class="about-badges">
@@ -220,7 +229,7 @@
           </div>
         </div>
 
-        <div class="about-card glass">
+        <div class="about-card glass" data-stagger-item data-reveal-from="right">
           <h3>Ecosystem Traction</h3>
           <p>Our network connects pre-seed and seed founders to vetted angels, syndicate leads, and industry mentors across key emerging tech verticals.</p>
           <div class="about-badges">
@@ -233,15 +242,16 @@
     </section>
 
     <!-- Services Section -->
+    <div class="section-divider"><div class="section-divider-line"></div></div>
     <section class="section-container reveal-on-scroll" id="services" aria-labelledby="services-title">
       <div class="section-header">
-        <span class="section-eyebrow">What We Offer</span>
-        <h2 class="section-title" id="services-title">Comprehensive Startup Support</h2>
+        <span class="section-eyebrow section-eyebrow-animate">What We Offer</span>
+        <h2 class="section-title" id="services-title" data-shimmer>Comprehensive Startup Support</h2>
         <p class="section-subtitle">Everything you need to turn early customer signals into scalable venture velocity.</p>
       </div>
 
-      <div class="services-grid">
-        <div class="service-card glass">
+      <div class="services-grid" data-stagger data-stagger-delay="110">
+        <div class="service-card glass" data-stagger-item data-reveal-from="scale">
           <div class="service-icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
@@ -251,7 +261,7 @@
           <p class="service-desc">Rigorous stress-testing of your product-market hypotheses, customer interviews, and initial unit economics with experienced product operators.</p>
         </div>
 
-        <div class="service-card glass">
+        <div class="service-card glass" data-stagger-item data-reveal-from="scale">
           <div class="service-icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
@@ -262,7 +272,7 @@
           <p class="service-desc">Curated introductions to active angel investors and venture funds aligned with your specific vertical, stage, and geography.</p>
         </div>
 
-        <div class="service-card glass">
+        <div class="service-card glass" data-stagger-item data-reveal-from="scale">
           <div class="service-icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -279,33 +289,34 @@
     </section>
 
     <!-- Solution Section -->
+    <div class="section-divider"><div class="section-divider-line"></div></div>
     <section class="section-container reveal-on-scroll" id="solution" aria-labelledby="solution-title">
       <div class="section-header">
-        <span class="section-eyebrow">Our Process</span>
-        <h2 class="section-title" id="solution-title">From Application to Funding</h2>
+        <span class="section-eyebrow section-eyebrow-animate">Our Process</span>
+        <h2 class="section-title" id="solution-title" data-shimmer>From Application to Funding</h2>
         <p class="section-subtitle">A predictable, founder-friendly four-stage path designed to eliminate ambiguity.</p>
       </div>
 
-      <div class="steps-grid">
-        <div class="step-card glass">
+      <div class="steps-grid" data-stagger data-stagger-delay="130">
+        <div class="step-card glass" data-stagger-item>
           <div class="step-number">01</div>
           <h3 class="step-title">Apply & Audit</h3>
           <p class="step-desc">Submit your startup details and deck. Our committee reviews within 5 business days with direct feedback.</p>
         </div>
 
-        <div class="step-card glass">
+        <div class="step-card glass" data-stagger-item>
           <div class="step-number">02</div>
           <h3 class="step-title">Readiness Sprint</h3>
           <p class="step-desc">Refine your narrative, financial model, and customer proof points alongside an assigned mentor.</p>
         </div>
 
-        <div class="step-card glass">
+        <div class="step-card glass" data-stagger-item>
           <div class="step-number">03</div>
           <h3 class="step-title">Capital Connection</h3>
           <p class="step-desc">Pitch directly to curated syndicate leads and investors eager to back founders in your vertical.</p>
         </div>
 
-        <div class="step-card glass">
+        <div class="step-card glass" data-stagger-item>
           <div class="step-number">04</div>
           <h3 class="step-title">Scale & Support</h3>
           <p class="step-desc">Access partner perks, follow-on guidance, and hiring assistance through our founder alumni network.</p>
@@ -314,6 +325,7 @@
     </section>
 
     <!-- Pricing Section -->
+    <div class="section-divider"><div class="section-divider-line"></div></div>
     <section class="section-container reveal-on-scroll" id="pricing" aria-labelledby="pricing-title">
       <div class="section-header">
         <span class="section-eyebrow">Investment & Plans</span>
@@ -373,6 +385,7 @@
     </section>
 
     <!-- FAQ Section -->
+    <div class="section-divider"><div class="section-divider-line"></div></div>
     <section class="section-container reveal-on-scroll" id="faq" aria-labelledby="faq-title">
       <div class="section-header">
         <span class="section-eyebrow">FAQ</span>
