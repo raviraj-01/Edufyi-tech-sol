@@ -73,14 +73,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(460px, 80vw);
-  height: min(540px, 65vh);
+  width: min(560px, 85vw);
+  height: min(520px, 65vh);
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  perspective: 900px;
+  mix-blend-mode: screen;
 }
 
 .hero-video-box {
@@ -90,7 +90,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transform-style: preserve-3d;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(
+    ellipse 62% 58% at 50% 50%,
+    #000000 30%,
+    rgba(0, 0, 0, 0.8) 52%,
+    rgba(0, 0, 0, 0.3) 72%,
+    transparent 90%
+  );
+  mask-image: radial-gradient(
+    ellipse 62% 58% at 50% 50%,
+    #000000 30%,
+    rgba(0, 0, 0, 0.8) 52%,
+    rgba(0, 0, 0, 0.3) 72%,
+    transparent 90%
+  );
 }
 
 .hero-video {
@@ -102,6 +116,7 @@
   height: 100%;
   object-fit: contain;
   mix-blend-mode: screen;
+  filter: contrast(112%) brightness(92%);
   opacity: 0;
   transition: opacity 700ms ease;
   pointer-events: none;
@@ -119,6 +134,7 @@
   height: 100%;
   object-fit: contain;
   mix-blend-mode: screen;
+  filter: contrast(112%) brightness(92%);
   display: none;
 }
 
