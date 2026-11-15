@@ -1,4 +1,6 @@
-// Hero video playback and 3D tilt module
+// Hero video playback module
+// Plays an intro video once, then crossfades to a looping video.
+// Falls back to a still image if video fails or the user prefers reduced motion.
 
 export function initHero() {
   const container = document.getElementById("hero-media-container");
@@ -13,6 +15,7 @@ export function initHero() {
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const saveData = Boolean(navigator.connection && navigator.connection.saveData);
 
+  // Show a static image instead of video
   function showFallback() {
     if (introVideo) introVideo.style.display = "none";
     if (loopVideo) loopVideo.style.display = "none";
@@ -44,7 +47,7 @@ export function initHero() {
   if (loopVideo) loopVideo.addEventListener("error", handleError);
 
   if (introVideo && loopVideo) {
-    // Intro video ended -> crossfade to loop
+    // When the intro finishes, switch to the looping video
     introVideo.addEventListener("ended", () => {
       if (!videoAvailable) return;
       introVideo.classList.remove("active");
@@ -52,7 +55,7 @@ export function initHero() {
       loopVideo.play().catch(handleError);
     });
 
-    // Start playing intro video
+    // Start the intro
     const playPromise = introVideo.play();
     if (playPromise !== undefined) {
       playPromise
@@ -65,7 +68,7 @@ export function initHero() {
         });
     }
 
-    // Pause loop video when hero is off-screen
+    // Pause the loop video when the hero is scrolled off screen (saves resources)
     const heroSection = document.getElementById("hero");
     if (heroSection && "IntersectionObserver" in window) {
       const observer = new IntersectionObserver((entries) => {
@@ -82,45 +85,4 @@ export function initHero() {
   } else {
     showFallback();
   }
-
-  // Mouse tilt
-  initHeroTilt(container, prefersReduced);
-}
-
-// Subtle 3D tilt tracking mouse
-function initHeroTilt(container, prefersReduced) {
-  if (prefersReduced) return;
-  const hero = document.getElementById("hero");
-  if (!hero) return;
-
-  // Disable on touch devices
-  if (window.matchMedia("(pointer: coarse)").matches) return;
-
-  let rafId = null;
-  const maxMove = 12; // px
-  const maxRotate = 4; // deg
-
-  hero.addEventListener("pointermove", (e) => {
-    const rect = hero.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const normX = Math.max(-1, Math.min(1, (e.clientX - centerX) / (rect.width / 2)));
-    const normY = Math.max(-1, Math.min(1, (e.clientY - centerY) / (rect.height / 2)));
-
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => {
-      const moveX = normX * maxMove;
-      const moveY = normY * maxMove;
-      const rotY = normX * maxRotate;
-      const rotX = -normY * maxRotate;
-
-      container.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-    });
-  });
-
-  hero.addEventListener("pointerleave", () => {
-    if (rafId) cancelAnimationFrame(rafId);
-    container.style.transform = "translate(-50%, -50%)";
-  });
 }
