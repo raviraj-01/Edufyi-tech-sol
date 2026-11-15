@@ -1,288 +1,81 @@
 /* =============================================================
-   scroll-fx.css  --  Premium scroll animation styles
+   scroll-fx.css  --  Simple scroll and hover styles
    ============================================================= */
 
-/* ---- Scroll progress bar ---- */
-#scroll-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--lime), var(--accent));
-  background-size: 200% auto;
-  animation: progressShimmer 3s linear infinite;
-  z-index: 9999;
-  pointer-events: none;
-  box-shadow: 0 0 10px var(--glow-green), 0 0 20px var(--glow-green-soft);
-  border-radius: 0 2px 2px 0;
-}
-
-@keyframes progressShimmer {
-  0%   { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-
-/* ---- Ambient scroll orbs ---- */
-.scroll-orb {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  will-change: transform;
-  z-index: 0;
-}
-
-.scroll-orb-1 {
-  width: 500px;
-  height: 500px;
-  top: 15%;
-  right: -120px;
-  background: radial-gradient(circle, rgba(26, 122, 94, 0.14) 0%, transparent 70%);
-  filter: blur(50px);
-}
-
-.scroll-orb-2 {
-  width: 420px;
-  height: 420px;
-  top: 60%;
-  left: -100px;
-  background: radial-gradient(circle, rgba(13, 122, 58, 0.11) 0%, transparent 70%);
-  filter: blur(60px);
-}
-
-.scroll-orb-3 {
-  width: 340px;
-  height: 340px;
-  top: 85%;
-  right: 10%;
-  background: radial-gradient(circle, rgba(168, 230, 60, 0.07) 0%, transparent 70%);
-  filter: blur(50px);
-}
-
-/* ---- Stagger reveal ---- */
-[data-stagger-item] {
-  opacity: 0;
-  transform: translateY(32px);
-  transition:
-    opacity 0.6s var(--ease),
-    transform 0.6s var(--ease),
-    box-shadow 0.3s ease;
-  will-change: opacity, transform;
-}
-
-[data-stagger-item][data-reveal-from="left"] {
-  transform: translateX(-40px) translateY(0);
-}
-[data-stagger-item][data-reveal-from="right"] {
-  transform: translateX(40px) translateY(0);
-}
-[data-stagger-item][data-reveal-from="scale"] {
-  transform: scale(0.9) translateY(0);
-}
-
-[data-stagger-item].stagger-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* ---- Section divider glowing line ---- */
-.section-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 32px;
-  margin: 0 auto;
-  max-width: 1200px;
-  overflow: hidden;
-}
-
-.section-divider-line {
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--accent) 30%,
-    var(--lime) 50%,
-    var(--accent) 70%,
-    transparent 100%
-  );
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.9s var(--ease);
-  box-shadow: 0 0 8px var(--glow-green-soft);
-  opacity: 0.6;
-}
-
-.section-divider-line.divider-visible {
-  transform: scaleX(1);
-}
-
-/* ---- Shimmer text ---- */
-[data-shimmer] {
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  will-change: background-position;
-}
-
-/* ---- Magnetic button ---- */
-[data-magnetic] {
-  transition: transform 0.2s var(--ease);
-  will-change: transform;
-}
-
-/* ---- Skew container ---- */
-[data-scroll-skew] {
-  will-change: transform;
-  transform-origin: center center;
-  transition: transform 0.05s linear;
-}
-
-/* ---- Parallax wrapper ---- */
-[data-parallax] {
-  will-change: transform;
-}
-
-/* ---- Enhanced reveal-on-scroll with variants ---- */
+/* ---- Fade-up reveal on scroll ---- */
+/* Elements with this class start invisible and slide up slightly.
+   JavaScript adds the "revealed" class via IntersectionObserver
+   when the element enters the viewport. */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.75s var(--ease),
-    transform 0.75s var(--ease);
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.reveal-on-scroll.reveal-from-left  { transform: translateX(-40px); }
-.reveal-on-scroll.reveal-from-right { transform: translateX(40px); }
-.reveal-on-scroll.reveal-scale      { transform: scale(0.94); }
 
 .reveal-on-scroll.revealed {
   opacity: 1;
   transform: none;
 }
 
-/* ---- Hover glow lift on glass cards ---- */
+/* ---- Card hover: lift and light border highlight ---- */
 .service-card,
 .about-card,
 .step-card,
 .pricing-card {
-  transition:
-    transform 0.3s var(--ease),
-    box-shadow 0.3s var(--ease),
-    border-color 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .service-card:hover,
 .about-card:hover,
 .step-card:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(34, 197, 94, 0.18),
-    0 0 30px rgba(34, 197, 94, 0.08);
-  border-color: rgba(34, 197, 94, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.2);
 }
 
-/* ---- FAQ hover glow ---- */
+/* ---- FAQ hover border ---- */
 .faq-item {
-  transition:
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
+  transition: border-color 0.2s ease;
 }
 
 .faq-item:hover,
 .faq-item[open] {
   border-color: rgba(34, 197, 94, 0.2) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 4px 24px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(34, 197, 94, 0.07);
 }
 
-/* ---- Hero scroll-hint animation improvement ---- */
+/* ---- Hero scroll hint bounce ---- */
+/* Simple up-down bounce so the user notices the scroll arrow. */
 .hero-scroll-hint {
-  animation: scrollBounce 2.2s var(--ease) infinite;
+  animation: scrollBounce 2s ease-in-out infinite;
 }
 
 @keyframes scrollBounce {
   0%, 100% { transform: translateY(0); opacity: 0.6; }
-  45%       { transform: translateY(6px); opacity: 1; }
+  50%       { transform: translateY(6px); opacity: 1; }
 }
 
-/* ---- Eyebrow pulse when section enters ---- */
-.section-eyebrow-animate {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
-}
-.section-eyebrow-animate.in {
-  opacity: 1;
-  transform: none;
-}
-
-/* ---- Pricing card featured pulse border ---- */
-.pricing-card.featured {
-  animation: featuredPulse 4s ease-in-out infinite;
-}
-
-@keyframes featuredPulse {
-  0%, 100% { box-shadow: inset 0 1px 0 rgba(168, 230, 60, 0.3), 0 8px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(168, 230, 60, 0.3), 0 0 30px rgba(168, 230, 60, 0.1); }
-  50%       { box-shadow: inset 0 1px 0 rgba(168, 230, 60, 0.3), 0 8px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(168, 230, 60, 0.5), 0 0 50px rgba(168, 230, 60, 0.18); }
-}
-
-/* ---- Stat item count-up highlight ---- */
-.stat-val-animated {
-  transition: color 0.3s ease;
-}
-
-/* ---- Service icon box spin on hover ---- */
-.service-icon-box {
-  transition: transform 0.4s var(--ease), box-shadow 0.3s ease;
-}
-.service-card:hover .service-icon-box {
-  transform: rotate(8deg) scale(1.1);
-  box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
-}
-
-/* ---- Step number glow on hover ---- */
-.step-number {
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-.step-card:hover .step-number {
-  color: var(--lime);
-  text-shadow: 0 0 20px rgba(168, 230, 60, 0.4);
-}
-
-/* ---- Nav scroll shrink ---- */
+/* ---- Nav scroll shadow ---- */
+/* When the user scrolls down, JavaScript adds "scrolled" to the header.
+   This just adds a subtle shadow to separate the nav from page content. */
 .site-header {
-  transition: padding 0.3s var(--ease), box-shadow 0.3s ease;
-}
-.site-header.scrolled {
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.08);
+  transition: box-shadow 0.3s ease;
 }
 
-/* ---- Reduced motion overrides ---- */
+.site-header.scrolled {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Reduced motion: disable all animations ---- */
 @media (prefers-reduced-motion: reduce) {
-  [data-stagger-item],
   .reveal-on-scroll,
-  .section-divider-line,
-  [data-shimmer],
-  [data-magnetic],
-  [data-scroll-skew],
-  [data-parallax],
   .service-card,
   .about-card,
   .step-card,
   .pricing-card,
-  .hero-scroll-hint,
-  .pricing-card.featured,
-  .section-eyebrow-animate {
+  .hero-scroll-hint {
     animation: none !important;
     transition: none !important;
     transform: none !important;
     opacity: 1 !important;
   }
-  .section-divider-line { transform: scaleX(1) !important; }
-  #scroll-progress-bar { animation: none !important; }
 }
