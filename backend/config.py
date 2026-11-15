@@ -11,7 +11,7 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-in-prod")
     MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/upfound")
     FLASK_ENV = os.getenv("FLASK_ENV", "development")
-    ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@upfound.example")
+    ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@upfound.test")
     ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "AdminUpfound2026!")
 
     # Session cookie settings

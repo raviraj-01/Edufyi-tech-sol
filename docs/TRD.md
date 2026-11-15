@@ -266,7 +266,7 @@ Largest Contentful Paint should be the poster image, not the video.
 MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/upfound
 SECRET_KEY=long-random-string
 FLASK_ENV=development
-ADMIN_EMAIL=admin@example.com
+ADMIN_EMAIL=admin@upfound.test
 ADMIN_PASSWORD=change-me-before-seeding
 ```
 
