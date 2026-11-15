@@ -7,13 +7,12 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
-  overflow-x: hidden;
   font-size: 16px;
 }
 
 body {
   min-height: 100svh;
-  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--text);
   font-family: var(--font-ui);
   line-height: 1.6;

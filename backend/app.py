@@ -26,11 +26,30 @@ def create_app(config_class=Config, test_config=None):
         except Exception:
             pass
 
+    @app.before_request
+    def check_content_type():
+        from flask import request
+        if request.method in ("POST", "PATCH") and request.path.startswith("/api/"):
+            if request.path == "/api/auth/logout":
+                return
+            if request.content_length and not request.is_json:
+                from backend.utils.errors import make_error
+                return make_error("validation_error", "Content-Type must be application/json", 415)
+
     @app.after_request
     def set_security_headers(response):
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline'; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' https://fonts.gstatic.com data:; "
+            "img-src 'self' data: https:; "
+            "media-src 'self'; "
+            "connect-src 'self';"
+        )
         return response
 
     # Rate limiting
