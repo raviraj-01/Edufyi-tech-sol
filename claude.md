@@ -23,7 +23,7 @@
 ### Step 1: Backend Skeleton
 - **Status:** COMPLETED
 - **Files:** `.gitignore`, `.env.example`, `backend/requirements.txt`, `backend/__init__.py`, `backend/config.py`, `backend/app.py`, `frontend/index.html`.
-- **Features:** App factory `create_app()`, security headers (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`), `GET /api/health`, and static `frontend/` serving.
+- **Features:** App factory `create_app()` in `backend/app.py`, security headers (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`), `GET /api/health`, and static `frontend/` serving.
 
 ### Step 2: Models and Seed
 - **Status:** COMPLETED
@@ -181,14 +181,14 @@
 - **Database Seeding:** Ran `seed.py` against Atlas:
   - Seeded stats snapshot (83% success rate, 86 launch score, 4.52% growth).
   - Seeded 3 pricing plans (Starter, Growth, Scale).
-  - Created admin user `admin@upfound.example`.
-- **Automated Tests:** All 22 pytest unit tests continue passing 100%.
+  - Created admin user `admin@upfound.test`.
+- **Automated Tests:** All 24 pytest unit tests passing 100%.
 
 ---
 
 ## Test Verification Summary
-- **Total Automated Unit Tests:** 22 passed (0 failures)
-- `tests/test_public.py`: 4 tests (health, stats fallback, stats seeded, plans)
+- **Total Automated Unit Tests:** 24 passed (0 failures)
+- `tests/test_public.py`: 5 tests (health, stats fallback, stats seeded, plans, database down fallback)
 - `tests/test_validation.py`: 5 tests (name, email, password, funding ask, 404 handler)
 - `tests/test_auth.py`: 7 tests (register, duplicate email, short password, login, bad password, me logged out, logout)
-- `tests/test_applications.py`: 6 tests (login required, validation error, creation & 3-app limit, contact submission, honeypot bot trap, admin review flow)
+- `tests/test_applications.py`: 7 tests (login required, validation error, creation & 3-app limit, contact submission, honeypot bot trap, admin review flow, write route 503 error)

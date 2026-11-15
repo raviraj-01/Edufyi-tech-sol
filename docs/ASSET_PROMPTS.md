@@ -34,7 +34,7 @@ Paste this at the start of every image prompt so all frames share one look.
 Premium 3D product render, dark emerald and deep teal palette, glossy glass and polished metal,
 soft volumetric green glow behind the subject, studio lighting with crisp rim light,
 shallow depth of field, near-black smooth gradient background, 16:9 widescreen,
-cinematic, ultra detailed, no text, no logos, no watermark.
+high quality, detailed, no text, no logos, no watermark.
 ```
 
 ## 4. Frame B (END): the hero shot. Make this first.
