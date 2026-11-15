@@ -1,7 +1,13 @@
+import sys
 from pathlib import Path
 from flask import Flask, jsonify, send_from_directory
 import mongoengine
-from .config import Config
+
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from backend.config import Config
 
 def create_app(config_class=Config, test_config=None):
     frontend_dir = Path(__file__).resolve().parent.parent / "frontend"
@@ -28,21 +34,21 @@ def create_app(config_class=Config, test_config=None):
         return response
 
     # Rate limiting
-    from .limiter import limiter
+    from backend.limiter import limiter
     limiter.init_app(app)
     if app.config.get("TESTING"):
         limiter.enabled = False
 
     # Error handlers
-    from .utils.errors import register_error_handlers
+    from backend.utils.errors import register_error_handlers
     register_error_handlers(app)
 
     # Routes
-    from .routes.public import public_bp
-    from .routes.auth import auth_bp
-    from .routes.applications import applications_bp
-    from .routes.contact import contact_bp
-    from .routes.admin import admin_bp
+    from backend.routes.public import public_bp
+    from backend.routes.auth import auth_bp
+    from backend.routes.applications import applications_bp
+    from backend.routes.contact import contact_bp
+    from backend.routes.admin import admin_bp
     app.register_blueprint(public_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(applications_bp)

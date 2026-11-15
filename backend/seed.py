@@ -1,10 +1,17 @@
 import os
+import sys
+from pathlib import Path
 import mongoengine
 from werkzeug.security import generate_password_hash
-from .config import Config
-from .models.user import User
-from .models.stats import StatsSnapshot
-from .models.plan import Plan
+
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from backend.config import Config
+from backend.models.user import User
+from backend.models.stats import StatsSnapshot
+from backend.models.plan import Plan
 
 PLANS_DATA = [
     {
