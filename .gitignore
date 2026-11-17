@@ -9,3 +9,5 @@ backend/*.env
 node_modules/
 .DS_Store
 assets-src/
+claude.md
+md-files/
