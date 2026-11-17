@@ -52,12 +52,6 @@ def create_app(config_class=Config, test_config=None):
         )
         return response
 
-    # Rate limiting
-    from backend.limiter import limiter
-    limiter.init_app(app)
-    if app.config.get("TESTING"):
-        limiter.enabled = False
-
     # Error handlers
     from backend.utils.errors import register_error_handlers
     register_error_handlers(app)

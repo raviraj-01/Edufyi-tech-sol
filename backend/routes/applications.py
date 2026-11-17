@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify, g
-from ..limiter import limiter
 from ..models.application import Application, StatusChange
 from ..utils.auth import login_required
 from ..utils.errors import make_error
@@ -12,7 +11,6 @@ applications_bp = Blueprint("applications", __name__, url_prefix="/api/applicati
 
 @applications_bp.route("", methods=["POST"])
 @login_required
-@limiter.limit("10/hour")
 def create_application():
     user = g.user
     if Application.objects(user=user).count() >= 3:

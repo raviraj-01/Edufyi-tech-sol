@@ -103,8 +103,8 @@ My own words:
 
 ### 11. How do you stop the contact form being spammed? What are the limits of your approach?
 
-**Answer:** The contact form uses a hidden honeypot input named `website_confirm`, positioned offscreen with CSS and hidden from screen readers. Legitimate human users do not see or fill this field. Automated spam bots crawling the form fields typically populate all inputs. When `POST /api/contact` receives a request where `website_confirm` has a value, the server drops the message silently and returns a 201 response so the bot does not adapt. The limit is that sophisticated bots specifically trained on the site structure or headless browser agents that only click visible inputs could bypass it, which is why IP-based rate limiting (5 per hour) is also enforced.
-- **Reference:** `frontend/index.html` (honeypot field), `backend/routes/contact.py` (`submit_contact`), `backend/limiter.py`
+**Answer:** The contact form uses a hidden honeypot input named `website_confirm`, hidden from real users. Legitimate users never see or fill this field. Automated spam bots scanning the DOM typically fill all inputs. When `POST /api/contact` receives a request where `website_confirm` has a value, the server drops the message silently and returns a 201 response so the bot does not adapt. The limit is that customized bots designed specifically for this form could skip the honeypot field, in which case a captcha (like Cloudflare Turnstile) would be the next step.
+- **Reference:** `frontend/index.html` (honeypot field), `backend/routes/contact.py` (`submit_contact`)
 
 My own words:
 
@@ -131,8 +131,8 @@ My own words:
 ### 14. If you had one more week, what would you build next, and why?
 
 **Answer:**
-1. Automated transactional email notifications (using SendGrid or Resend) to notify founders whenever an administrator updates their application status.
-2. Replacing the in-memory Flask-Limiter store with Redis so rate limits persist across server restarts and work across multiple worker instances.
+1. Automated email notifications to notify founders whenever an administrator updates their application status.
+2. Adding rate limiting using Redis if the site receives heavy traffic or public abuse.
 3. Adding pitch deck file uploads directly to AWS S3 or Cloudflare R2 with pre-signed upload URLs.
 - **Reference:** `README.md` (`What I would do next`)
 
@@ -142,7 +142,7 @@ My own words:
 
 ### 15. What is the weakest part of this project?
 
-**Answer:** The in-memory rate limiting and session storage. With in-memory storage, restarting the Gunicorn process resets all rate limits, and running multiple Gunicorn worker processes without sticky sessions can cause session inconsistencies unless using signed client-side cookies or a central Redis store. Additionally, administrative status updates currently use a basic prompt dialog in the dashboard rather than an accessible inline modal.
-- **Reference:** `backend/limiter.py`, `frontend/js/dashboard.js` (`loadAdminApplications`)
+**Answer:** Administrative status updates currently use a basic prompt dialog in the dashboard rather than a full inline modal with rich comments. Also, the app currently uses client-side signed cookies for sessions; under high traffic with multiple server instances, moving session storage to Redis would be more robust.
+- **Reference:** `frontend/js/dashboard.js` (`loadAdminApplications`)
 
 My own words:

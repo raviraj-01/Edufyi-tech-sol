@@ -1,138 +1,135 @@
 # UpFound: Fuel for Startups
 
-A dark, glassy landing site for a fictional startup support platform, with a working Flask + MongoDB backend: accounts, startup applications, a contact form, a sample stats card, and a founder dashboard.
+A clean, dark landing page and web application for an early-stage startup support platform. Built with Python (Flask) and MongoDB on the backend, and plain HTML, CSS, and modern JavaScript on the frontend.
 
-> Demo project. UpFound is a student demo project. It is not a real financial service. All numbers are sample data from a seeded record.
+> **Note:** UpFound is a student demo project. It is not a real financial service. All numbers and stats shown on the site are sample data.
 
 ## What it does
 
-- Navigation, a 3D hero card, and an animated stats card (ring + count-up) fed by an API with hardcoded defaults
-- Register, log in, log out with a signed session cookie
-- Startup application form saved to MongoDB, with server-side validation
-- Founder dashboard showing application status and history
-- Contact form with a honeypot and rate limiting
-- Pricing plans loaded from the database
-- Responsive from 360px up, keyboard friendly, respects reduced motion
+- **Landing page:** Clean dark theme with a 3D visual card and a live stats widget.
+- **User accounts:** Register, log in, and log out with secure session cookies.
+- **Startup application form:** Founders can submit their startup details and funding ask to MongoDB.
+- **Founder dashboard:** Founders can view their submitted applications and see review status updates.
+- **Contact form:** Visitors can send a message, protected with a honeypot field to stop automated spam bots.
+- **Pricing section:** Displays membership plans loaded directly from the database.
+- **Responsive design:** Works smoothly on mobile screens (360px) up to desktop monitors.
 
-## Stack
+## Tech Stack
 
-- **Frontend:** HTML, CSS, vanilla JavaScript (ES modules, no build step)
-- **Backend:** Python, Flask, MongoEngine
-- **Database:** MongoDB Atlas (free M0 tier)
-- **Tests:** pytest, mongomock (24 automated tests)
-- **Hosting:** Render (Gunicorn)
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript (ES modules, no build tools or frameworks needed).
+- **Backend:** Python 3, Flask, MongoEngine (ODM).
+- **Database:** MongoDB Atlas.
+- **Testing:** pytest with mongomock (24 automated tests).
+- **Deployment:** Render (Gunicorn).
 
-## Run it locally
+## Running the Project Locally
 
-```powershell
-# 1. Clone repository
-git clone https://github.com/your-username/upfound
-cd upfound
-
-# 2. Create and activate virtual environment (Windows PowerShell)
-python -m venv venv
-.\venv\Scripts\activate
-
-# 3. Install backend dependencies
-pip install -r backend/requirements.txt
-
-# 4. Copy environment template or use existing .env
-cp .env.example .env
-
-# 5. Run initial database seed
-python -m backend.seed
-
-# 6. Start development server
-python backend/app.py
+### 1. Clone the repository
+```bash
+git clone https://github.com/raviraj-01/Edufyi-tech-sol.git
+cd Edufyi-tech-sol
 ```
 
-Open `http://127.0.0.1:5000` in your browser.
+### 2. Set up Python virtual environment
+On Windows (PowerShell):
+```powershell
+python -m venv venv
+.\venv\Scripts\activate
+```
 
-Environment variables are listed in `.env.example`. Default admin credentials for testing:
+On macOS / Linux:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install dependencies
+```bash
+pip install -r backend/requirements.txt
+```
+
+### 4. Configure environment variables
+Copy the example file to `.env`:
+```bash
+cp .env.example .env
+```
+Fill in your MongoDB connection string in `.env` if you are using your own database.
+
+### 5. Seed sample data
+Populate the database with default pricing plans, stats, and an admin user:
+```bash
+python -m backend.seed
+```
+
+### 6. Start the server
+```bash
+python backend/app.py
+```
+Open `http://127.0.0.1:5000` in your web browser.
+
+Default admin credentials for testing:
 - **Email:** `admin@upfound.test`
 - **Password:** `AdminUpfound2026!`
 
 ## Automated Tests
 
-Run all 24 automated unit and integration tests (using in-memory `mongomock`):
-
-```powershell
-.\venv\Scripts\python -m pytest -v
+Run the full test suite using in-memory mock database tests:
+```bash
+pytest -v
 ```
+All 24 unit and integration tests run without needing an active internet connection.
 
-## API
+## API Endpoints
 
-| Method | Path | Auth | Purpose |
+| Method | Endpoint | Access | Description |
 |---|---|---|---|
-| `GET` | `/api/health` | none | Heartbeat check |
-| `GET` | `/api/stats` | none | Stats snapshot (falls back to hardcoded defaults if DB is down) |
-| `GET` | `/api/plans` | none | Pricing plans in order (falls back to hardcoded defaults if DB is down) |
-| `POST` | `/api/auth/register` | none | Create account and log in |
-| `POST` | `/api/auth/login` | none | Log in |
-| `POST` | `/api/auth/logout` | user | Clear session |
-| `GET` | `/api/auth/me` | none | Current user or `null` |
-| `POST` | `/api/applications` | user | Submit application (max 3 per user) |
-| `GET` | `/api/applications/mine` | user | Founder applications, newest first |
-| `POST` | `/api/contact` | none | Send a message (honeypot protected) |
-| `GET` | `/api/admin/applications` | admin | All applications (admin queue) |
-| `PATCH` | `/api/admin/applications/<id>` | admin | Set status and note |
+| `GET` | `/api/health` | Public | Server health check |
+| `GET` | `/api/stats` | Public | Key stats (falls back to defaults if database is unreachable) |
+| `GET` | `/api/plans` | Public | Pricing plans (falls back to defaults if database is unreachable) |
+| `POST` | `/api/auth/register` | Public | Create a new user account |
+| `POST` | `/api/auth/login` | Public | Log in with email and password |
+| `POST` | `/api/auth/logout` | User | Log out and clear session cookie |
+| `GET` | `/api/auth/me` | Public | Get currently logged-in user profile |
+| `POST` | `/api/applications` | User | Submit a startup application (maximum 3 per user) |
+| `GET` | `/api/applications` | User | View user's submitted applications |
+| `POST` | `/api/contact` | Public | Send a contact message (with bot protection) |
+| `GET` | `/api/admin/applications` | Admin | View all submitted applications across the platform |
+| `PATCH` | `/api/admin/applications/<id>/status` | Admin | Update application review status and notes |
 
-Full details in `docs/TRD.md`.
-
-## Project structure
+## Project Structure
 
 ```
 backend/
-  app.py            create_app() factory, routes, headers, local entry point
-  config.py         reads env vars, enforces production secrets
-  limiter.py        Flask-Limiter configuration
-  models/           User, Application, Contact, Stats, Plan
-  routes/           public, auth, applications, contact, admin
-  utils/            errors, validate, auth decorators
-  seed.py           database initial seed
+  app.py            Application factory, routes registration, security headers
+  config.py         Configuration settings and secret key checks
+  models/           Database schemas (User, Application, Contact, Stats, Plan)
+  routes/           API routes (auth, applications, contact, public, admin)
+  utils/            Helper functions for validation and error handling
+  seed.py           Populates initial sample database records
 frontend/
-  index.html        landing page
-  dashboard.html    founder dashboard
-  css/              tokens, base, nav, hero, stats, forms, sections, dashboard, scroll-fx
-  js/               main, api, auth, nav, hero, stats, forms, pricing, reveal, dashboard, scroll-fx
-  assets/
-    video/          hero-intro.mp4/.webm, hero-loop.mp4/.webm (720p, 24fps)
-    img/            hero-poster.webp, hero-end.webp, og.png, logo.svg, favicon.svg
+  index.html        Main landing page
+  dashboard.html    User and admin dashboard
+  css/              Styling files (tokens, base, nav, hero, stats, forms, sections)
+  js/               JavaScript modules (main, api, auth, nav, hero, stats, forms)
+  assets/           Images and hero video clips
 tests/
-  test_public.py        health, stats, plans, database down fallback
-  test_validation.py    input validation and error handler
-  test_auth.py          registration, duplicate check, login, logout
-  test_applications.py  auth guard, 3-app limit, honeypot, admin review, 503 error
+  test_public.py        Public routes and fallback tests
+  test_validation.py    Form and input validation tests
+  test_auth.py          Account registration, login, and logout tests
+  test_applications.py  Application submissions and admin review tests
 docs/
-  PRD.md, TRD.md, db_schema.md, DESIGN_SYSTEM.md, TODO.md, CODE_STYLE.md, INTERVIEW_NOTES.md
-  screenshots/      responsive screenshots at 360, 768, 1280, 1440
+  PRD.md, TRD.md, db_schema.md, INTERVIEW_NOTES.md
 ```
 
-## Decisions
+## Key Decisions
 
-- **Plain JS and Flask.** Small scope, one service, no build step, and it's the stack I know best. I would use React if the project needed it.
-- **Stats card has hardcoded defaults in the HTML.** The free server sleeps, so the hero must look right before the API answers.
-- **Embedded status history.** It is always read with its application, so one document is simpler than two collections.
-- **Rate limiting in memory.** Fine for a demo, it resets when the server restarts. A real deployment would use Redis.
-- **Atlas open to all IPs.** Needed on Render's free tier. Not something I would do in production.
-- **Hero video native 24 fps.** Preserved the exact Flow source framerate (24 fps) without artificial interpolation to 30 fps, keeping file size small while staying well below the performance budget (intro at 1.72 MB / <= 3 MB budget, loop at 0.83 MB / <= 2 MB budget).
+- **No frontend frameworks (Vanilla JS):** Keeps the project fast, lightweight, and easy to explain. Native ES modules work directly in all modern browsers without needing Webpack, Vite, or npm packages.
+- **Default data fallbacks:** If MongoDB is offline, public routes (like stats and plans) automatically return default data so the website does not look broken to visitors.
+- **Embedded status history:** Application status changes (like `submitted` -> `in_review` -> `shortlisted`) are stored inside the application document itself, keeping review history simple and easy to fetch.
+- **Video blending with CSS:** The 3D hero video was rendered on a black background and blended into the page using CSS `mix-blend-mode: screen`, keeping file sizes small while blending with the dark green theme.
 
-## Known gaps
+## Future Improvements
 
-- Lighthouse scores not yet recorded
-- Not tested on a real phone
-- Not yet tested against a live Atlas cluster
-- In-memory rate limits reset on restart
-
-## What I would do next
-
-- Email the founder when the status changes
-- Move rate limiting to Redis
-- Add more tests for the admin routes
-
-## Credits
-
-- Layout inspired by a design reference from the mini project brief. Code is my own.
-- The 3D hero visuals were generated with Google Flow, then compressed with ffmpeg and composited with CSS. Everything else is hand-coded.
-- Fonts: Inter and Inter Tight (Google Fonts)
-- Icons: hand-drawn inline SVG
+- Send an email notification to the founder when their application status is updated.
+- Add file upload support so founders can upload PDF pitch decks directly.
+- Add more automated test coverage for admin reviewer workflows.

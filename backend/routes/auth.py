@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from ..limiter import limiter
 from ..models import now
 from ..models.user import User
 from ..utils.errors import make_error
@@ -10,7 +9,6 @@ from ..utils.auth import get_current_user
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
 @auth_bp.route("/register", methods=["POST"])
-@limiter.limit("10/minute")
 def register():
     data = request.get_json(silent=True)
     if not isinstance(data, dict):
@@ -36,7 +34,6 @@ def register():
     return jsonify({"user": user.to_public()}), 201
 
 @auth_bp.route("/login", methods=["POST"])
-@limiter.limit("10/minute")
 def login():
     data = request.get_json(silent=True)
     if not isinstance(data, dict):

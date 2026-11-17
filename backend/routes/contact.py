@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify
-from ..limiter import limiter
 from ..models.contact import ContactMessage
 from ..utils.errors import make_error
 from ..utils.validate import check_name, check_email, check_topic, check_message
@@ -7,7 +6,6 @@ from ..utils.validate import check_name, check_email, check_topic, check_message
 contact_bp = Blueprint("contact", __name__, url_prefix="/api/contact")
 
 @contact_bp.route("", methods=["POST"])
-@limiter.limit("5/hour")
 def submit_contact():
     data = request.get_json(silent=True)
     if not isinstance(data, dict):
