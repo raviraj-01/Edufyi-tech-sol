@@ -4,8 +4,6 @@ A dark, glassy landing site for a fictional startup support platform, with a wor
 
 > Demo project. UpFound is a student demo project. It is not a real financial service. All numbers are sample data from a seeded record.
 
-![Hero screenshot](docs/screenshots/hero.png)
-
 ## What it does
 
 - Navigation, a 3D hero card, and an animated stats card (ring + count-up) fed by an API with hardcoded defaults
@@ -15,8 +13,6 @@ A dark, glassy landing site for a fictional startup support platform, with a wor
 - Contact form with a honeypot and rate limiting
 - Pricing plans loaded from the database
 - Responsive from 360px up, keyboard friendly, respects reduced motion
-
-![Dashboard screenshot](docs/screenshots/dashboard.png)
 
 ## Stack
 
