@@ -1,8 +1,6 @@
 # UpFound: Fuel for Startups
 
-A clean, dark landing page and web application for an early-stage startup support platform. Built with Python (Flask) and MongoDB on the backend, and plain HTML, CSS, and modern JavaScript on the frontend.
-
-> **Note:** UpFound is a student demo project. It is not a real financial service. All numbers and stats shown on the site are sample data.
+A clean, dark landing page and web application for an early-stage startup support platform. Built with Python (Flask) and MongoDB on the backend, and plain HTML, CSS, and modern JavaScript on the frontend. 
 
 ## What it does
 
